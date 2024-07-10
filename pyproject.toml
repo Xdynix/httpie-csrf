@@ -8,6 +8,7 @@ authors = [
 dependencies = [
     "httpie<4.0.0,>=3.2.0",
     "requests<3.0.0,>=2.28.0",
+    "python-decouple>=3.8",
 ]
 requires-python = ">=3.10"
 readme = "README.md"
@@ -41,7 +42,7 @@ help = "execute linters"
 
 [tool.ruff]
 cache-dir = ".cache/ruff"
-target-version = "py312"
+target-version = "py310"
 
 [tool.ruff.lint]
 select = [
@@ -75,4 +76,8 @@ cache_dir = ".cache/mypy"
 
 [[tool.mypy.overrides]]
 module = "httpie.plugins"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "decouple"
 ignore_missing_imports = true
