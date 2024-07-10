@@ -1,10 +1,50 @@
 # httpie-csrf
 
-[HTTPie](https://httpie.io/) plugin to append CSRF token to request header.
+A plugin that helps [HTTPie](https://httpie.io/) easily access CSRF-protected
+(especially Django-style) endpoints.
 
-## Installation
+It will try to read the CSRF token from the cookie and add it to the corresponding
+header; and set the `Referer` header for the request - these are checked by Django's
+CSRF protection.
 
-(TODO)
+## Usage
+
+Installation:
+
+```shell
+httpie cli plugins install git+https://github.com/Xdynix/httpie-csrf.git
+```
+
+Configure the settings by creating a `.env` in your working directory,
+or setting environment variables.
+
+Example:
+
+```dotenv
+# Django project default
+
+# Required. Set to the hostname you're querying.
+HTTPIE_CSRF_PREFIX=http://localhost:8000
+
+# Optional, if it's the same as Django's default.
+CSRF_COOKIE_NAME=csrftoken
+
+# Optional, if it's the same as Django's default.
+CSRF_HEADER_NAME=HTTP_X_CSRFTOKEN
+```
+
+Now you can use `http` to query your endpoint directly without being bothered by CSRF
+protection or sacrificing the security it brings.
+
+```shell
+http --session=dev POST http://localhost:8000/api/login username=john password=secret
+```
+
+Caveat: You still need an HTTPie session for this to work. Make it as a default option
+in the HTTPie [config](https://httpie.io/docs/cli/config) to omit the argument.
+
+You may also need to first make a request to an endpoint that ensures the CSRF cookie is
+provided (such as one decorated with `ensure_csrf()`) to obtain the CSRF token.
 
 ## Setting
 
