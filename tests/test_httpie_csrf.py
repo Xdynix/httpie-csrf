@@ -3,10 +3,11 @@ import os
 from typing import cast
 from urllib.parse import urljoin
 
-import httpie_csrf.plugin
 import pytest
 from pytest_mock import MockerFixture
 from requests import Session
+
+import httpie_csrf.plugin
 
 HTTPBIN = "https://httpbin.org"
 
